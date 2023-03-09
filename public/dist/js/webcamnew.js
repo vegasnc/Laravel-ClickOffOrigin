@@ -45,8 +45,7 @@ const ios = () => {
 };
 
 $(document).ready(function() {
-  // const isiPhone = ios();
-  const isiPhone = true;
+  const isiPhone = ios();
 
   if( !isiPhone ) {
     getCameraSelection().then((r) => {
