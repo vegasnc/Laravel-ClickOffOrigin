@@ -108,7 +108,7 @@
                             <div class="col-sm-6" style="display:none;" id="addnewstatus">
                               <div class="form-group">
                                 <strong>Or Add New Status Type</strong>
-                                <input type="text" id="addnewstatus" name="addnewstatus" class="form-control" placeholder="Enter Status Name">
+                                <input type="text" name="addnewstatus" class="form-control" placeholder="Enter Status Name">
                               </div>
                             </div>
                         </div>
@@ -139,7 +139,7 @@
                             <div class="col-sm-6" style="display:none;" id="addnewaction">
                               <div class="form-group">
                                 <strong>Or Add New Action Type</strong>
-                                <input type="text" id="addnewaction" name="addnewaction" class="form-control" placeholder="Enter Action Name">
+                                <input type="text" name="addnewaction" class="form-control" placeholder="Enter Action Name">
                               </div>
                             </div>
                         </div>
@@ -163,7 +163,7 @@
                             <div class="col-sm-6" style="display:none;" id="addnewclient">
                               <div class="form-group">
                                 <strong>Or Add New Client Name</strong>
-                                <input type="text" id="addnewclient" name="addnewclient" class="form-control" placeholder="Enter Client Name">
+                                <input type="text" name="addnewclient" class="form-control" placeholder="Enter Client Name">
                               </div>
                             </div>
                         </div>
