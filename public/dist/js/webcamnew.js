@@ -45,8 +45,8 @@ const ios = () => {
 };
 
 $(document).ready(function() {
-  // const isiPhone = ios();
-  const isiPhone = true;
+  const isiPhone = ios();
+  // const isiPhone = true;
 
   if( !isiPhone ) {
     getCameraSelection().then((r) => {
@@ -131,7 +131,6 @@ const doScreenshot = async () => {
 
   await getMeta(path, (err, img) => {
     var photo_num = parseInt($("#photo_num").val());
-    console.log(photo_num);
     $("#photo_num").val(photo_num + 1);
     $("#temp_gallery .photoData").attr("value", path);
     $("#temp_gallery .photoData").attr("name", "photo" + photo_num);
