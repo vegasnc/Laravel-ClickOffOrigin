@@ -45,7 +45,8 @@ const ios = () => {
 };
 
 $(document).ready(function() {
-  const isiPhone = ios();
+  // const isiPhone = ios();
+  const isiPhone = true;
 
   if( !isiPhone ) {
     getCameraSelection().then((r) => {
@@ -84,8 +85,8 @@ $(document).ready(function() {
 const handleImageSelect = async (event) => {
   $("#iosphotosection").show();
   var fileArr = event.target.files;
-  $("#photo_num").val(fileArr.length);
-  var x = 0;
+  var x = parseInt($("#photo_num").val());
+  $("#photo_num").val(x + fileArr.length);
   for(let file of fileArr) {
     const fileReader = new FileReader();
     fileReader.onload = async () => {
@@ -121,18 +122,20 @@ const handleStream = (stream) => {
   $("#btn_screenshot").removeClass("d-none");
 };
 
-const doScreenshot = () => {
+const doScreenshot = async () => {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   canvas.getContext('2d').drawImage(video, 0, 0);
 
   var path = canvas.toDataURL('image/webp');
-  var photo_num = parseInt($("#photo_num").val());
-  $("#photo_num").val(photo_num + 1);
-  $("#temp_gallery .photoData").attr("value", path);
-  $("#temp_gallery .photoData").attr("name", "photo" + photo_num);
 
-  getMeta(path, (err, img) => {
+  await getMeta(path, (err, img) => {
+    var photo_num = parseInt($("#photo_num").val());
+    console.log(photo_num);
+    $("#photo_num").val(photo_num + 1);
+    $("#temp_gallery .photoData").attr("value", path);
+    $("#temp_gallery .photoData").attr("name", "photo" + photo_num);
+
     var imageWidth = $("#image_template").width() - 4;
     rateImage = img.naturalHeight / img.naturalWidth;
     var imageHeight = imageWidth / img.naturalWidth * img.naturalHeight;
@@ -155,8 +158,8 @@ const resizeCaptureImg = () => {
 
 const getMeta = (url, cb) => {
   const img = new Image();
-  img.onload = () => cb(null, img);
-  img.onerror = (err) => cb(err);
+  img.onload = async () => await cb(null, img);
+  img.onerror = async (err) => await cb(err);
   img.src = url;
 };
 

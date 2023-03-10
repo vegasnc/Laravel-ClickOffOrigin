@@ -147,17 +147,26 @@
 
 
                       <div class="col-xs-12 col-sm-12 col-md-12">
-                          <div class="form-group">
-                            <strong>Tagged</strong>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="tagged" value="1">
-                              <label class="form-check-label">Yes</label>
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <div class="form-group">
+                                <strong>Client Name<span class="red">*</span></strong>
+                                <select class="form-control select5 select2-success" data-dropdown-css-class="select2-success" id="client" name="client" style="width: 100%;" required>
+                                  <option value="">Please Select</option>
+                                  <option value="1">Add New Client</option>
+                                  @foreach($client as $key=>$val)
+                                  <option value="{{$val['name']}}">{{$val['name']}}</option>
+                                  @endforeach
+                                </select>  
+                              </div>
                             </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="tagged" value="0">
-                              <label class="form-check-label">No</label>
+                            <div class="col-sm-6" style="display:none;" id="addnewclient">
+                              <div class="form-group">
+                                <strong>Or Add New Client Name</strong>
+                                <input type="text" id="addnewclient" name="addnewclient" class="form-control" placeholder="Enter Client Name">
+                              </div>
                             </div>
-                          </div>
+                        </div>
                       </div>
                       <div class="col-xs-12 col-sm-12 col-md-12">
                           <div class="form-group">
@@ -168,13 +177,13 @@
                       <div class="col-xs-12 col-sm-6 col-md-3">
                           <div class="form-group">
                               <strong>Color (optional)</strong>
-                              <input type="color" id="color" name="color" class="form-control" placeholder="Color">
+                              <input type="text" id="color" name="color" class="form-control" placeholder="Color">
                           </div>
                       </div>
                       <div class="col-xs-12 col-sm-12 col-md-12">
                           <div class="form-group">
-                              <strong>Photo</strong>
-                              <button type="button" id="btn_capture" class="btn btn-success green-btn ml-5">Click here capture your photo</button>  
+                              <strong>Take Photos</strong>
+                              <button type="button" id="btn_capture" class="btn btn-success green-btn ml-5">Tap here to Capture Photos</button>  
                               <input id="btn_ios_capture" type="file" accept="image/*" onchange="handleImageSelect(event)" hidden multiple>
                           </div>
                       </div>
@@ -201,7 +210,7 @@
                           </div>
                       </div>
 
-                      <div class="col-xs-12 col-sm-6 col-md-3" id="image_template">
+                      <div class="col-6 col-sm-6 col-md-3" id="image_template">
                       </div>
 
                       <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -213,7 +222,7 @@
               </form>
               </div>
               <div id="temp_gallery" class="d-none">
-                <div class="col-xs-12 col-sm-6 col-md-3 image-item" style="margin-bottom: 2px; padding:2px !important;">
+                <div class="col-6 col-sm-6 col-md-3 image-item" style="margin-bottom: 2px; padding:2px !important;">
                     <img class="image-template" alt="" style="width: 100%; height: auto">
                     <input class="photoData" type="hidden" name="photo"/>
                 </div>

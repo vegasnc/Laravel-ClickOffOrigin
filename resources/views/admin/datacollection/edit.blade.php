@@ -47,7 +47,7 @@
                         <div class="row"> 
                           <div class="col-sm-6">
                             <div class="form-group">
-                                <strong>Please Select Asset Types</strong>
+                                <strong>Please Select Asset Types<span class="red">*</span></strong>
                                 <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="asset" name="asset" style="width: 100%;">
                                   <option value="">Please Select</option>
                                   <option value="1">Add New Asset</option>
@@ -71,7 +71,7 @@
                       </div>
                       <div class="col-xs-12 col-sm-12 col-md-12">
                           <div class="form-group">
-                              <strong>Live Location</strong>
+                              <strong>Live Location<span class="red">*</span></strong>
                               <button type="button" class="btn btn-success green-btn mb-1" onclick="getLocation()">Click here</button>
                               <input type="hidden" id="latitude" name="latitude" class="form-control mb-1" placeholder="Latitude" value="{{ $user->latitude }}">
                               <input type="hidden" id="longitude" name="longitude" class="form-control" placeholder="Longitude" value="{{ $user->longitude }}">
@@ -96,7 +96,7 @@
                         <div class="row"> 
                           <div class="col-sm-6">
                             <div class="form-group">
-                                <strong>Please Select Status Types</strong>
+                                <strong>Please Select Status Types<span class="red">*</span></strong>
                                 <select class="form-control select3 select2-success" data-dropdown-css-class="select2-success" id="status" name="status" style="width: 100%;">
                                   <option value="">Please Select</option>
                                   <option value="1">Add New Status</option>
@@ -130,7 +130,7 @@
                         <div class="row"> 
                           <div class="col-sm-6">
                             <div class="form-group">
-                                <strong>Please Select Action Types</strong>
+                                <strong>Please Select Action Types<span class="red">*</span></strong>
                                 <select class="form-control select4 select2-success" data-dropdown-css-class="select2-success" id="action" name="action" style="width: 100%;">
                                   <option value="">Please Select</option>
                                   <option value="1">Add New Action</option>
@@ -154,17 +154,30 @@
                       </div>
                       
                       <div class="col-xs-12 col-sm-12 col-md-12">
-                          <div class="form-group">
-                            <strong>Tagged</strong>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="tagged" value="1" {{ $user->tagged=="1" ? 'checked' : '' }}>
-                              <label class="form-check-label">Yes</label>
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <div class="form-group">
+                                <strong>Client Name<span class="red">*</span></strong>
+                                <select class="form-control select5 select2-success" data-dropdown-css-class="select2-success" id="client" name="client" style="width: 100%;" required>
+                                  <option value="">Please Select</option>
+                                  <option value="1">Add New Client</option>
+                                  @foreach($client as $key=>$val)
+                                    @if($user->client == $val['name'])
+                                    <option value="{{$val['name']}}" selected>{{$val['name']}}</option>
+                                    @else
+                                    <option value="{{$val['name']}}">{{$val['name']}}</option>
+                                    @endif
+                                  @endforeach
+                                </select>  
+                              </div>
                             </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="tagged" value="0" {{ $user->tagged=="0" ? 'checked' : '' }}>
-                              <label class="form-check-label">No</label>
+                            <div class="col-sm-6" style="display:none;" id="addnewclient">
+                              <div class="form-group">
+                                <strong>Or Add New Client Name</strong>
+                                <input type="text" id="addnewclient" name="addnewclient" class="form-control" placeholder="Enter Client Name">
+                              </div>
                             </div>
-                          </div>
+                        </div>
                       </div>
                       <div class="col-xs-12 col-sm-12 col-md-12">
                           <div class="form-group">
@@ -176,14 +189,14 @@
                       <div class="col-xs-12 col-sm-6 col-md-3">
                           <div class="form-group">
                               <strong>Color (optional)</strong>
-                              <input type="color" id="color" name="color" class="form-control" placeholder="Color" value="{{ $user->color }}">
+                              <input type="text" id="color" name="color" class="form-control" placeholder="Color" value="{{ $user->color }}">
                           </div>
                       </div>
                       <div class="col-xs-12 col-sm-12 col-md-12">
                           <div class="form-group">
-                              <strong>Photo</strong>
-                              <button type="button" id="btn_capture" class="btn btn-success green-btn ml-5">Click here capture your photo</button>  
-                              <input id="btn_ios_capture" type="file" accept="image/*" onchange="handleImageSelect(event)" hidden>
+                              <strong>Take Photos</strong>
+                              <button type="button" id="btn_capture" class="btn btn-success green-btn ml-5">Tap here to Capture Photos</button>  
+                              <input id="btn_ios_capture" type="file" accept="image/*" onchange="handleImageSelect(event)" hidden multiple>
                           </div>
                       </div>
                       <div class="col-xs-12 col-sm-12 col-md-12">
@@ -195,26 +208,26 @@
                                     <input type="button" id="btn_screenshot" class="btn btn-outline-success screenshot d-none" value="ScreenShot"/>
                                 </div>
                             </div>
-                            <input type="hidden" id="photo_num" name="photo_num" value="0"/>
                             <div class="display-cover" id="iosphotosection" style="display:none;">
                             
                             </div>
                           </div>
                       </div>
-                      <div class="col-xs-12 col-sm-12 col-md-12">
+                      <div class="col-12 col-sm-12 col-md-12">
                           <div class="form-group">
                               <div class="row" id="gallery">
+                                  <?php $x = 0;?>
                                   @foreach($photo_arr as $key=>$val)
-                                    <div class="col-xs-12 col-sm-6 col-md-3 image-item" style="margin-bottom: 2px; padding:2px !important;">
+                                    <div class="col-6 col-sm-6 col-md-3 image-item" style="margin-bottom: 2px; padding:2px !important;">
                                         <img class="image-template" alt="" style="width: 100%; height: auto" src="<?php echo asset("storage/dist/img/photo/$val")?>">
-                                        <input class="photoData" type="hidden" name="photo"/>
+                                        <input class="photoData" type="hidden" name="photo<?= $x ++?>" value="<?=$val?>"/>
                                     </div>
                                   @endforeach
-
+                                  <input type="hidden" id="photo_num" name="photo_num" value="{{ $x }}"/>
                               </div>
                           </div>
                       </div>
-                      <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                      <div class="col-12 col-sm-12 col-md-12 text-center">
                         <button type="submit" class="btn btn-success green-btn">Submit</button>
                         <a class="btn btn-success green-btn" href="{{ route('datacollection') }}"> Cancel</a>
                       </div>
@@ -222,7 +235,7 @@
               </form>
               </div>
               <div id="temp_gallery" class="d-none">
-                <div class="col-xs-12 col-sm-6 col-md-3 image-item" style="margin-bottom: 2px; padding:2px !important;">
+                <div class="col-6 col-sm-6 col-md-3 image-item" style="margin-bottom: 2px; padding:2px !important;">
                     <img class="image-template" alt="" style="width: 100%; height: auto">
                     <input class="photoData" type="hidden" name="photo"/>
                 </div>

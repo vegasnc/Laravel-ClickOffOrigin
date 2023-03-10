@@ -48,7 +48,7 @@
               </div>
             </div><!-- /.card-header -->
             <div class="card-body">
-              <div class="tab-content p-0">
+              <div class="tab-content p-0 table-resp">
               <table id="datacollection" class="table table-bordered table-striped yajra-datatable">
                   <thead>
                     <tr>
@@ -57,7 +57,7 @@
                         <th>Status</th>
                         <th>Quantity</th>
                         <th>Action</th>
-                        <th>Tagged</th>
+                        <th>Client</th>
                         <th>Color</th>
                         <th>Asset Picture</th>
                         <th>Created</th>
@@ -73,7 +73,7 @@
                         <td>{{ $user->status }}</td>
                         <td>{{ $user->quantity }}</td>
                         <td>{{ $user->action }}</td>
-                        <td>{{ $user->tagged=="0" ? 'No' : 'Yes' }}</td>
+                        <td>{{ $user->client }}</td>
                         <td>{{ $user->color }}</td>
                         <td>
                           <?php 

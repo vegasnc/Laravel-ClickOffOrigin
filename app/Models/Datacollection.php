@@ -20,7 +20,7 @@ class Datacollection extends Authenticatable
         'status',
         'quantity',
         'action',
-        'tagged',
+        'client',
         'color',
         'description',
         'photo',

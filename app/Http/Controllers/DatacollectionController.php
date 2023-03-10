@@ -8,6 +8,7 @@ use App\Models\Datacollection;
 use App\Models\Asset;
 use App\Models\Status;
 use App\Models\Action;
+use App\Models\Client;
 use Carbon\Carbon;
 use Storage;
 
@@ -42,7 +43,8 @@ class DatacollectionController extends Controller
         $asset = asset::all();
         $status = status::all();
         $action = action::all();
-        return view('admin.datacollection.create',compact('asset', 'status', 'action'));
+        $client = client::all();
+        return view('admin.datacollection.create',compact('asset', 'status', 'action', 'client'));
     }
     
     /**
@@ -57,7 +59,8 @@ class DatacollectionController extends Controller
             'asset' => 'required',
             'status' => 'required',
             'action' => 'required',
-            'quantity' => 'required'
+            'quantity' => 'required',
+            'client' => 'required',
         ]);
         
         $data = $request->all();
@@ -80,9 +83,6 @@ class DatacollectionController extends Controller
                 $photo_datas = $photo_datas.",".$safeName;
         }
 
-        
-        
-        $data = $request->all(); 
         $data['photo'] = $photo_datas;
 
         if(isset($data['addnewasset']) && $data['addnewasset'] != ""){
@@ -107,6 +107,14 @@ class DatacollectionController extends Controller
             );
             Action::create($array_new_action);
             $data['action'] = $data['addnewaction'];
+        }
+
+        if(isset($data['addnewclient']) && $data['addnewclient'] != ""){
+            $array_new_client = array(
+                'name'=>$data['addnewclient'],
+            );
+            Client::create($array_new_client);
+            $data['client'] = $data['addnewclient'];
         }
 
         $user = Datacollection::create($data);
@@ -141,6 +149,7 @@ class DatacollectionController extends Controller
         $asset = asset::all();
         $status = status::all();
         $action = action::all();
+        $client = client::all();
         $user = DB::table('datacollection')->where('id', $id)->first();
         $photos = $user->photo;
         $photo_arr = array();
@@ -149,7 +158,7 @@ class DatacollectionController extends Controller
             array_push($photo_arr, $photo_token);
             $photo_token = strtok(",");
         }
-        return view('admin.datacollection.edit',compact('user','asset','status','action', 'photo_arr'));
+        return view('admin.datacollection.edit',compact('user','asset','status','action', 'client', 'photo_arr'));
     }
     function is_base64($str)
     {
@@ -170,35 +179,43 @@ class DatacollectionController extends Controller
         
         $data = $request->all();
         
-        
-
-        $base64_str = substr($data['photo'], strpos($data['photo'], ",")+1);
-        if($this->is_base64($base64_str) == true){
-            $image = base64_decode($base64_str);
-            $current_date_time = Carbon::now()->timestamp;
-            $safeName = $current_date_time.'.'.'png';    
-            Storage::disk('public')->put('dist/img/photo/'.$safeName, $image);
-        }else{
-            $safeName = $data['photo'];   
+        $photo_cnt = 0;
+        $photo_datas = "";
+        if( isset( $data['photo_num'] ) && $data['photo_num'] != "" ) {
+            $photo_cnt = $data['photo_num'];
         }
-        
+
+        for($x = 0; $x < $photo_cnt; $x ++) {
+            $base64_str = substr($data['photo'.$x], strpos($data['photo'.$x], ",")+1);
+            if($this->is_base64($base64_str) == true){
+                $image = base64_decode($base64_str);
+                $current_date_time = Carbon::now()->timestamp;
+                $safeName = $current_date_time.'_'.$x.'.'.'png';
+                Storage::disk('public')->put('dist/img/photo/'.$safeName, $image);
+            }else{
+                $safeName = $data['photo'.$x];   
+            }
+            
+            if( $photo_datas == '' )
+                $photo_datas = $safeName;
+            else
+                $photo_datas = $photo_datas.",".$safeName;
+        }
 
         $array_data = array(
             "asset" => $data['asset'],
             "address" => $data['address'],
             "quantity" => $data['quantity'],
-            "condition" => $data['condition'],
-            "tagged" => $data['tagged'],
+            "action" => $data['action'],
+            "status" => $data['status'],
+            "client" => $data['client'],
             "color" => $data['color'],
             "latitude" => $data['latitude'],
             "longitude" => $data['longitude'],
             "description" => $data['description'],
-            "photo" => $safeName,
+            "photo" => $photo_datas,
             "autoaddress" => $data['autoaddress'],
         );
-
-        
-        
        
         if(isset($data['addnewasset']) && $data['addnewasset'] != ""){
             $array_new_asset = array(
