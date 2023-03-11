@@ -40,7 +40,7 @@
             </div><!-- /.card-header -->
             <div class="card-body">
               <div class="tab-content p-0">
-              <form action="{{ route('data-add') }}" method="POST">
+              <form id="data_add" action="{{ route('data-add') }}" method="POST">
                   @csrf
                 
                   <div class="row">
@@ -48,8 +48,8 @@
                         <div class="row">
                             <div class="col-sm-6">
                               <div class="form-group">
-                                <strong>Please Select Asset Types</strong>
-                                <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="asset" name="asset" style="width: 100%;">
+                                <strong>Please Select Asset Types<span class="red">*</span></strong>
+                                <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="asset" name="asset" style="width: 100%;" required>
                                   <option value="">Please Select</option>
                                   <option value="1">Add New Asset</option>
                                   @foreach($asset as $key=>$val)
@@ -69,7 +69,7 @@
 
                       <div class="col-xs-12 col-sm-12 col-md-12">
                           <div class="form-group">
-                              <strong>Live Location</strong>
+                              <strong>Live Location<span class="red">*</span></strong>
                               <button type="button" class="btn btn-success green-btn mb-1" onclick="getLocation()">Click here</button>
                               <input type="hidden" id="latitude" name="latitude" class="form-control mb-1" placeholder="Latitude">
                               <input type="hidden" id="longitude" name="longitude" class="form-control" placeholder="Longitude">
@@ -89,37 +89,84 @@
                               <textarea class="form-control" name="address" placeholder="Address" row="2"></textarea>
                           </div>
                       </div>
+
+                      
+                      <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <div class="form-group">
+                                <strong>Please Select Status Types<span class="red">*</span></strong>
+                                <select class="form-control select3 select2-success" data-dropdown-css-class="select2-success" id="status" name="status" style="width: 100%;" required>
+                                  <option value="">Please Select</option>
+                                  <option value="1">Add New Status</option>
+                                  @foreach($status as $key=>$val)
+                                  <option value="{{$val['name']}}">{{$val['name']}}</option>
+                                  @endforeach
+                                </select>  
+                              </div>
+                            </div>
+                            <div class="col-sm-6" style="display:none;" id="addnewstatus">
+                              <div class="form-group">
+                                <strong>Or Add New Status Type</strong>
+                                <input type="text" name="addnewstatus" class="form-control" placeholder="Enter Status Name">
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+
                       <div class="col-xs-12 col-sm-12 col-md-12">
                           <div class="form-group">
                               <strong>Quantity<span class="red">*</span></strong>
                               <input type="number" id="quantity" name="quantity" class="form-control" placeholder="Quantity" required >
                           </div>
                       </div>
+
+                         
                       <div class="col-xs-12 col-sm-12 col-md-12">
-                          <div class="form-group">
-                              <strong>Condition</strong>
-                              <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="condition" name="condition" style="width: 100%;">
-                                <option value="">Please Select</option>
-                                <option value="Like New">Like New</option>
-                                <option value="Fair">Fair</option>
-                                <option value="Used">Used</option>
-                                <option value="Damaged">Damaged</option>
-                              </select>  
-                          </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <div class="form-group">
+                                <strong>Please Select Action Types<span class="red">*</span></strong>
+                                <select class="form-control select4 select2-success" data-dropdown-css-class="select2-success" id="action" name="action" style="width: 100%;" required>
+                                  <option value="">Please Select</option>
+                                  <option value="1">Add New Action</option>
+                                  @foreach($action as $key=>$val)
+                                  <option value="{{$val['name']}}">{{$val['name']}}</option>
+                                  @endforeach
+                                </select>  
+                              </div>
+                            </div>
+                            <div class="col-sm-6" style="display:none;" id="addnewaction">
+                              <div class="form-group">
+                                <strong>Or Add New Action Type</strong>
+                                <input type="text" name="addnewaction" class="form-control" placeholder="Enter Action Name">
+                              </div>
+                            </div>
+                        </div>
                       </div>
 
+
                       <div class="col-xs-12 col-sm-12 col-md-12">
-                          <div class="form-group">
-                            <strong>Tagged</strong>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="tagged" value="1">
-                              <label class="form-check-label">Yes</label>
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <div class="form-group">
+                                <strong>Client Name<span class="red">*</span></strong>
+                                <select class="form-control select5 select2-success" data-dropdown-css-class="select2-success" id="client" name="client" style="width: 100%;" required>
+                                  <option value="">Please Select</option>
+                                  <option value="1">Add New Client</option>
+                                  @foreach($client as $key=>$val)
+                                  <option value="{{$val['name']}}">{{$val['name']}}</option>
+                                  @endforeach
+                                </select>  
+                              </div>
                             </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="tagged" value="0">
-                              <label class="form-check-label">No</label>
+                            <div class="col-sm-6" style="display:none;" id="addnewclient">
+                              <div class="form-group">
+                                <strong>Or Add New Client Name</strong>
+                                <input type="text" name="addnewclient" class="form-control" placeholder="Enter Client Name">
+                              </div>
                             </div>
-                          </div>
+                        </div>
                       </div>
                       <div class="col-xs-12 col-sm-12 col-md-12">
                           <div class="form-group">
@@ -127,7 +174,7 @@
                               <textarea class="form-control" name="description" placeholder="Description" row="3"></textarea>
                           </div>
                       </div>
-                      <div class="col-xs-12 col-sm-12 col-md-12">
+                      <div class="col-xs-12 col-sm-6 col-md-3">
                           <div class="form-group">
                               <strong>Color (optional)</strong>
                               <input type="text" id="color" name="color" class="form-control" placeholder="Color">
@@ -135,37 +182,54 @@
                       </div>
                       <div class="col-xs-12 col-sm-12 col-md-12">
                           <div class="form-group">
-                              <strong>Photo</strong>
-                              <button type="button" id="btn_capture" class="btn btn-success green-btn ml-5">Click here capture your photo</button>  
-                              
+                              <strong>Take Photos</strong>
+                              <button type="button" id="btn_capture" class="btn btn-success green-btn ml-5">Tap here to Capture Photos</button>  
+                              <input id="btn_ios_capture" type="file" accept="image/*" onchange="handleImageSelect(event)" hidden multiple>
                           </div>
                       </div>
                       <div class="col-xs-12 col-sm-12 col-md-12">
                           <div class="form-group">
                             <div class="display-cover" id="photosection" style="display:none;"> 
                                 <video autoplay></video>
-                                <canvas class="d-none"></canvas>
-                                <img class="screenshot-image d-none" alt="">
-                                <input id="photoData" type="hidden" name="photo"/> 
+                                <canvas class="d-none"></canvas> 
                                 <div class="controls">
                                     <input type="button" id="btn_screenshot" class="btn btn-outline-success screenshot d-none" value="ScreenShot"/>
                                 </div>
                             </div>
+                            <input type="hidden" id="photo_num" name="photo_num" value="0"/>
+                            <div class="display-cover" id="iosphotosection" style="display:none;">
+                            
+                            </div>
                           </div>
                       </div>
-                      <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                              <button type="submit" class="btn btn-success green-btn">Save Data</button>
-                              <a class="btn btn-success green-btn" href="{{ route('datacollection') }}"> Cancel</a>
+                      <div class="col-xs-12 col-sm-12 col-md-12">
+                          <div class="form-group">
+                              <div class="row" id="gallery">
+
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="col-6 col-sm-6 col-md-3" id="image_template">
+                      </div>
+
+                      <div class="col-xs-12 col-sm-12 col-md-12 text-center submit-div">
+                          <button type="submit" id="btn_submit" class="btn btn-success green-btn">Save Data</button>
+                          <a class="btn btn-success green-btn" href="{{ route('datacollection') }}"> Cancel</a>
                       </div>
                   </div>
                 
               </form>
               </div>
-              
+              <div id="temp_gallery" class="d-none">
+                <div class="col-6 col-sm-6 col-md-3 image-item" style="margin-bottom: 2px; padding:2px !important; background-color: #333333; display:flex;">
+                    <img class="image-template" alt="" style="margin:auto;">
+                    <input class="photoData" type="hidden" name="photo"/>
+                </div>
+              </div>
             </div><!-- /.card-body -->
           </div>
           <!-- /.Customer Information -->
-
         </section>
     </div>
 

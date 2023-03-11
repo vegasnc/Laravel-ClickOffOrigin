@@ -55,6 +55,10 @@
   </div>
 </div>
 
+<div id="loading-div" class="d-none">
+  <img src="{{asset('dist/img/loading.gif')}}" width="70px" height="70px">
+</div>
+
 
 
   <!-- Navbar -->

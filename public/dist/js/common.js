@@ -283,31 +283,35 @@ $(function () {
       }
     });   
 
+    
+    $("#status").select2();
+    $('#status').on('select2:select', function (e) {
+      var data = $(".select3 option:selected").val();
+      if(data == 1){
+        $("#addnewstatus").show();
+      }else{
+        $("#addnewstatus").hide();
+      }
+    });   
 
-    $("#imgCapture").on("click", function() {
-      Webcam.set({
-        width: 320,
-        height: 240,
-        image_format: 'jpeg',
-        jpeg_quality: 90
-      });
-      Webcam.attach('#webcam');
-      $("#imgCapture").hide();
-      $("#btnCapture").show();
-      $("#webcam").show();
+    $("#action").select2();
+    $('#action').on('select2:select', function (e) {
+      var data = $(".select4 option:selected").val();
+      if(data == 1){
+        $("#addnewaction").show();
+      }else{
+        $("#addnewaction").hide();
+      }
     });
 
-    $("#btnCapture").on("click", function () {
-      Webcam.snap(function (data_uri) {
-        $("#webcam").hide();
-        $("#imgCaptureImg").show();
-        $("#imgCapture").show();
-        $("#btnCapture").hide();
-        $("#imgCaptureImg")[0].src = data_uri;
-        $("#photoData").val(data_uri);
-        Webcam.reset()
-        // $("#btnUpload").removeAttr("disabled");
-      });
+    $("#client").select2();
+    $('#client').on('select2:select', function (e) {
+      var data = $(".select5 option:selected").val();
+      if(data == 1){
+        $("#addnewclient").show();
+      }else{
+        $("#addnewclient").hide();
+      }
     });
 });
 /* END BAR CHART */
@@ -708,6 +712,7 @@ function getTotalAsset(){
       }
   });
 }
+
 function getTotalRevenueT(){
   var _token = $('#token').val();
   var select_cl_id = sessionStorage.getItem('select_cl_id');

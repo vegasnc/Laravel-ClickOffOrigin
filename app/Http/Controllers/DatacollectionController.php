@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Datacollection;
 use App\Models\Asset;
+use App\Models\Status;
+use App\Models\Action;
+use App\Models\Client;
 use Carbon\Carbon;
 use Storage;
 
@@ -38,7 +41,10 @@ class DatacollectionController extends Controller
     public function dataform()
     {
         $asset = asset::all();
-        return view('admin.datacollection.create',compact('asset'));
+        $status = status::all();
+        $action = action::all();
+        $client = client::all();
+        return view('admin.datacollection.create',compact('asset', 'status', 'action', 'client'));
     }
     
     /**
@@ -50,16 +56,34 @@ class DatacollectionController extends Controller
     public function dataadd(Request $request)
     {
         $request->validate([
+            'asset' => 'required',
+            'status' => 'required',
+            'action' => 'required',
             'quantity' => 'required',
+            'client' => 'required',
         ]);
+        
         $data = $request->all();
-        $base64_str = substr($data['photo'], strpos($data['photo'], ",")+1);
-        $image = base64_decode($base64_str);
-        $current_date_time = Carbon::now()->timestamp;
-        $safeName = $current_date_time.'.'.'png';    
-        Storage::disk('public')->put('dist/img/photo/'.$safeName, $image);
-        $data = $request->all(); 
-        $data['photo'] = $safeName;
+
+        $photo_cnt = 0;
+        $photo_datas = "";
+        if( isset( $data['photo_num'] ) && $data['photo_num'] != "" ) {
+            $photo_cnt = $data['photo_num'];
+        }
+
+        for($x = 0; $x < $photo_cnt; $x ++) {
+            $base64_str = substr($data['photo'.$x], strpos($data['photo'.$x], ",")+1);
+            $image = base64_decode($base64_str);
+            $current_date_time = Carbon::now()->timestamp;
+            $safeName = $current_date_time.'_'.$x.'.'.'png';    
+            Storage::disk('public')->put('dist/img/photo/'.$safeName, $image);
+            if( $photo_datas == '' )
+                $photo_datas = $safeName;
+            else
+                $photo_datas = $photo_datas.",".$safeName;
+        }
+
+        $data['photo'] = $photo_datas;
 
         if(isset($data['addnewasset']) && $data['addnewasset'] != ""){
             $array_new_asset = array(
@@ -67,11 +91,33 @@ class DatacollectionController extends Controller
             );
             Asset::create($array_new_asset);
             $data['asset'] = $data['addnewasset'];
-            $user = Datacollection::create($data);
-        }else{
-            $user = Datacollection::create($data);
         }
-        
+
+        if(isset($data['addnewstatus']) && $data['addnewstatus'] != ""){
+            $array_new_status = array(
+                'name'=>$data['addnewstatus'],
+            );
+            Status::create($array_new_status);
+            $data['status'] = $data['addnewstatus'];
+        }
+
+        if(isset($data['addnewaction']) && $data['addnewaction'] != ""){
+            $array_new_action = array(
+                'name'=>$data['addnewaction'],
+            );
+            Action::create($array_new_action);
+            $data['action'] = $data['addnewaction'];
+        }
+
+        if(isset($data['addnewclient']) && $data['addnewclient'] != ""){
+            $array_new_client = array(
+                'name'=>$data['addnewclient'],
+            );
+            Client::create($array_new_client);
+            $data['client'] = $data['addnewclient'];
+        }
+
+        $user = Datacollection::create($data);
 
         if ($user) {
             return redirect()->route('datacollection')->with('success', 'Data created successfully.');
@@ -101,8 +147,18 @@ class DatacollectionController extends Controller
     public function dataedit($id)
     {   
         $asset = asset::all();
+        $status = status::all();
+        $action = action::all();
+        $client = client::all();
         $user = DB::table('datacollection')->where('id', $id)->first();
-        return view('admin.datacollection.edit',compact('user','asset'));
+        $photos = $user->photo;
+        $photo_arr = array();
+        $photo_token = strtok($photos, ",");
+        while( $photo_token !== false ) {
+            array_push($photo_arr, $photo_token);
+            $photo_token = strtok(",");
+        }
+        return view('admin.datacollection.edit',compact('user','asset','status','action', 'client', 'photo_arr'));
     }
     function is_base64($str)
     {
@@ -123,35 +179,43 @@ class DatacollectionController extends Controller
         
         $data = $request->all();
         
-        
-
-        $base64_str = substr($data['photo'], strpos($data['photo'], ",")+1);
-        if($this->is_base64($base64_str) == true){
-            $image = base64_decode($base64_str);
-            $current_date_time = Carbon::now()->timestamp;
-            $safeName = $current_date_time.'.'.'png';    
-            Storage::disk('public')->put('dist/img/photo/'.$safeName, $image);
-        }else{
-            $safeName = $data['photo'];   
+        $photo_cnt = 0;
+        $photo_datas = "";
+        if( isset( $data['photo_num'] ) && $data['photo_num'] != "" ) {
+            $photo_cnt = $data['photo_num'];
         }
-        
+
+        for($x = 0; $x < $photo_cnt; $x ++) {
+            $base64_str = substr($data['photo'.$x], strpos($data['photo'.$x], ",")+1);
+            if($this->is_base64($base64_str) == true){
+                $image = base64_decode($base64_str);
+                $current_date_time = Carbon::now()->timestamp;
+                $safeName = $current_date_time.'_'.$x.'.'.'png';
+                Storage::disk('public')->put('dist/img/photo/'.$safeName, $image);
+            }else{
+                $safeName = $data['photo'.$x];   
+            }
+            
+            if( $photo_datas == '' )
+                $photo_datas = $safeName;
+            else
+                $photo_datas = $photo_datas.",".$safeName;
+        }
 
         $array_data = array(
             "asset" => $data['asset'],
             "address" => $data['address'],
             "quantity" => $data['quantity'],
-            "condition" => $data['condition'],
-            "tagged" => $data['tagged'],
+            "action" => $data['action'],
+            "status" => $data['status'],
+            "client" => $data['client'],
             "color" => $data['color'],
             "latitude" => $data['latitude'],
             "longitude" => $data['longitude'],
             "description" => $data['description'],
-            "photo" => $safeName,
+            "photo" => $photo_datas,
             "autoaddress" => $data['autoaddress'],
         );
-
-        
-        
        
         if(isset($data['addnewasset']) && $data['addnewasset'] != ""){
             $array_new_asset = array(

@@ -26,10 +26,11 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <!-- <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('dist/img/gg_logo_new.jpg') }}" width="150" height="70">
                 </a>
-                <span class="logo-text">ClickMetrix - Login</span>
+                <span class="logo-text">ClickMetrix - Login</span> -->
+                <h1 class="logo-text pt-0"><a href="/" style="color:#10523a;">CLICKMETRIX</a></h1>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>

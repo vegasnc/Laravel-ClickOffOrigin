@@ -41,6 +41,10 @@ class HomeController extends Controller
         $clientterritory = json_decode(file_get_contents(env('API_URL_API').'API/clientterritory.php'), true);
         return view('admin.dashboard',compact('clientiteamtype','clientterritory'));
     }
+    
+    public function showIndex() {
+        return view("admin.index");
+    }
 
     public function logout(Request $request)
     {
