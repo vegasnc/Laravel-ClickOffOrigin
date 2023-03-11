@@ -4,10 +4,7 @@ const controls = document.querySelector('.controls');
 const video = document.querySelector('video');
 const canvas = document.querySelector('canvas');
 const screenshotImage = document.querySelector('img');
-const buttons = [...controls.querySelectorAll('button')];
 let streamStarted = false;
-
-const [play, pause, screenshot] = buttons;
 
 var rateImage = -1;
 
@@ -80,6 +77,26 @@ $(document).ready(function() {
       }
     }
   })
+
+  var imgTagArr = $("#gallery .image-template");
+  var imgTagCnt = imgTagArr.length;
+  for(var x = 0; x < imgTagCnt; x ++) {
+    var imgTag = imgTagArr[x];
+    var width = imgTag.width;
+    var height = imgTag.height;
+    var parent_width = imgTag.parentElement.offsetWidth;
+    imgTag.parentElement.style.height = parent_width + "px";
+    if( width >= height ) {
+      imgTag.classList.add("image-response-tablet");
+    } else {
+      imgTag.classList.add("image-response-mobile");
+    }
+  }
+
+  $("form").on("submit", (e) => {
+    $(".submit-div").html($("#loading-div").html());
+  })
+
 });
 
 const handleImageSelect = async (event) => {
@@ -96,11 +113,21 @@ const handleImageSelect = async (event) => {
           $("#temp_gallery .photoData").attr("value", path);
           $("#temp_gallery .photoData").attr("name", "photo" + x);
           x ++;
-          
-          var imageWidth = $("#image_template").width() - 4;
+          var imageWidth = $("#image_template").width();
           rateImage = img.naturalHeight / img.naturalWidth;
-          var imageHeight = imageWidth / img.naturalWidth * img.naturalHeight;
-          $("#temp_gallery .image-item").height((imageHeight + 4) + "px")
+          var imageHeight;
+          if ( rateImage <= 1 ) {
+            imageHeight = imageWidth / img.naturalWidth * img.naturalHeight;
+            $("#temp_gallery .image-template").removeClass("image-response-tablet");
+            $("#temp_gallery .image-template").removeClass("image-response-mobile");
+            $("#temp_gallery .image-template").addClass("image-response-tablet");
+            
+          } else {
+            $("#temp_gallery .image-template").removeClass("image-response-tablet");
+            $("#temp_gallery .image-template").removeClass("image-response-mobile");
+            $("#temp_gallery .image-template").addClass("image-response-mobile");
+          }
+          $("#temp_gallery .image-item").height((imageWidth + 11) + "px")
           $("#temp_gallery .image-template").attr("src", path);
           var temp_gallery = $("#temp_gallery").html();
           $("#gallery").append(temp_gallery);
@@ -130,28 +157,39 @@ const doScreenshot = async () => {
   var path = canvas.toDataURL('image/webp');
 
   await getMeta(path, (err, img) => {
-    var photo_num = parseInt($("#photo_num").val());
-    $("#photo_num").val(photo_num + 1);
-    $("#temp_gallery .photoData").attr("value", path);
-    $("#temp_gallery .photoData").attr("name", "photo" + photo_num);
+      var photo_num = parseInt($("#photo_num").val());
+      $("#photo_num").val(photo_num + 1);
+      $("#temp_gallery .photoData").attr("value", path);
+      $("#temp_gallery .photoData").attr("name", "photo" + photo_num);
 
-    var imageWidth = $("#image_template").width() - 4;
-    rateImage = img.naturalHeight / img.naturalWidth;
-    var imageHeight = imageWidth / img.naturalWidth * img.naturalHeight;
-    $("#temp_gallery .image-item").height((imageHeight + 4) + "px")
-    $("#temp_gallery .image-template").attr("src", path);
-    var temp_gallery = $("#temp_gallery").html();
-    $("#gallery").append(temp_gallery);
+      var imageWidth = $("#image_template").width();
+      rateImage = img.naturalHeight / img.naturalWidth;
+      var imageHeight;
+      if ( rateImage <= 1 ) {
+        imageHeight = imageWidth / img.naturalWidth * img.naturalHeight;
+        $("#temp_gallery .image-template").removeClass("image-response-tablet");
+        $("#temp_gallery .image-template").removeClass("image-response-mobile");
+        $("#temp_gallery .image-template").addClass("image-response-tablet");
+        
+      } else {
+        $("#temp_gallery .image-template").removeClass("image-response-tablet");
+        $("#temp_gallery .image-template").removeClass("image-response-mobile");
+        $("#temp_gallery .image-template").addClass("image-response-mobile");
+      }
+      $("#temp_gallery .image-item").height((imageWidth + 11) + "px")
+      $("#temp_gallery .image-template").attr("src", path);
+      var temp_gallery = $("#temp_gallery").html();
+      $("#gallery").append(temp_gallery);
+
   });
 
   
 };
 
 const resizeCaptureImg = () => {
-  var divWidth = $(".image-item").width() - 4;
-  var divHeight = divWidth * rateImage + 4;
+  var divWidth = $(".image-item").width();
   if(rateImage != -1) {
-    $(".image-item").height(divHeight + "px");
+    $(".image-item").height(divWidth + "px");
   }
 };
 

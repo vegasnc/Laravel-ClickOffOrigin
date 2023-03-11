@@ -40,7 +40,7 @@
             </div><!-- /.card-header -->
             <div class="card-body">
               <div class="tab-content p-0">
-              <form action="{{ route('data-update',$user->id) }}" method="POST">
+              <form id="data-add" action="{{ route('data-update',$user->id) }}" method="POST">
                   @csrf
                   <div class="row">
                       <div class="col-xs-12 col-sm-12 col-md-12">
@@ -218,8 +218,8 @@
                               <div class="row" id="gallery">
                                   <?php $x = 0;?>
                                   @foreach($photo_arr as $key=>$val)
-                                    <div class="col-6 col-sm-6 col-md-3 image-item" style="margin-bottom: 2px; padding:2px !important;">
-                                        <img class="image-template" alt="" style="width: 100%; height: auto" src="<?php echo asset("storage/dist/img/photo/$val")?>">
+                                    <div class="col-6 col-sm-6 col-md-3 image-item" style="margin-bottom: 2px; padding:2px !important; background-color: #333333; display:flex;">
+                                        <img class="image-template" alt="" style="margin:auto;" src="<?php echo asset("storage/dist/img/photo/$val")?>">
                                         <input class="photoData" type="hidden" name="photo<?= $x ++?>" value="<?=$val?>"/>
                                     </div>
                                   @endforeach
@@ -227,7 +227,9 @@
                               </div>
                           </div>
                       </div>
-                      <div class="col-12 col-sm-12 col-md-12 text-center">
+                      <div class="col-6 col-sm-6 col-md-3" id="image_template">
+                      </div>
+                      <div class="col-12 col-sm-12 col-md-12 text-center submit-div">
                         <button type="submit" class="btn btn-success green-btn">Submit</button>
                         <a class="btn btn-success green-btn" href="{{ route('datacollection') }}"> Cancel</a>
                       </div>
@@ -235,8 +237,8 @@
               </form>
               </div>
               <div id="temp_gallery" class="d-none">
-                <div class="col-6 col-sm-6 col-md-3 image-item" style="margin-bottom: 2px; padding:2px !important;">
-                    <img class="image-template" alt="" style="width: 100%; height: auto">
+                <div class="col-6 col-sm-6 col-md-3 image-item" style="margin-bottom: 2px; padding:2px !important; background-color: #333333; display:flex;">
+                    <img class="image-template" alt="" style="margin:auto;">
                     <input class="photoData" type="hidden" name="photo"/>
                 </div>
               </div>

@@ -28,7 +28,7 @@
         <!-- Main row -->
         <div class="row mt-3">
             <div class="col-xs-12 col-sm-12 col-md-3">
-                <a class="big-btn-a" href="{{ route('datacollection') }}">
+                <a class="big-btn-a" href="{{ route('data-form') }}">
                     <div class="big-btn">
                         Collect Data
                     </div>

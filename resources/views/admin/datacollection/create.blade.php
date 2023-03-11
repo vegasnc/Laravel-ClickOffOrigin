@@ -213,7 +213,7 @@
                       <div class="col-6 col-sm-6 col-md-3" id="image_template">
                       </div>
 
-                      <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                      <div class="col-xs-12 col-sm-12 col-md-12 text-center submit-div">
                           <button type="submit" id="btn_submit" class="btn btn-success green-btn">Save Data</button>
                           <a class="btn btn-success green-btn" href="{{ route('datacollection') }}"> Cancel</a>
                       </div>
@@ -222,8 +222,8 @@
               </form>
               </div>
               <div id="temp_gallery" class="d-none">
-                <div class="col-6 col-sm-6 col-md-3 image-item" style="margin-bottom: 2px; padding:2px !important;">
-                    <img class="image-template" alt="" style="width: 100%; height: auto">
+                <div class="col-6 col-sm-6 col-md-3 image-item" style="margin-bottom: 2px; padding:2px !important; background-color: #333333; display:flex;">
+                    <img class="image-template" alt="" style="margin:auto;">
                     <input class="photoData" type="hidden" name="photo"/>
                 </div>
               </div>

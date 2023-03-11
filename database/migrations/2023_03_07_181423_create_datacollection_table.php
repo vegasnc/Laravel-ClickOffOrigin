@@ -25,8 +25,8 @@ class CreateDatacollectionTable extends Migration
             $table->string('action')->nullable();
             $table->string('client')->nullable();
             $table->string('color', 45)->nullable();
-            $table->string('description')->nullable();
-            $table->string('photo')->nullable();
+            $table->text('description')->nullable();
+            $table->text('photo')->nullable();
             $table->timestamps();
         });
     }

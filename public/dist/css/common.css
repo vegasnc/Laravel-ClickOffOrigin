@@ -234,4 +234,18 @@ video {
   overflow-x: auto;
 }
 
+.image-response-tablet {
+  width: 100%;
+  height: auto;
+}
+
+.image-response-mobile {
+  height: 100%;
+  width: auto;
+}
+
+#gallery .image-item {
+  /* box-shadow: 2px 2px 2px gray; */
+  border: 5px solid white;
+}
 /*end webcam*/
