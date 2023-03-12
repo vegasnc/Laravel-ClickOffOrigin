@@ -94,6 +94,13 @@ $(document).ready(function() {
   }
 
   $("#btn_submit_temp").on("click", () => {
+
+    var actionVal = $("#action").val();
+    if( actionVal == "" ) {
+      $("#btn_submit_real").trigger("click");
+      return;
+    }
+
     confirmModal("Are you sure?", "Are you sure you want to submit?", ()=>{
       $("#btn_submit_real").trigger("click");
       $(".submit-div").html($("#loading-div").html());
