@@ -120,10 +120,10 @@ class DatacollectionController extends Controller
         $user = Datacollection::create($data);
 
         if ($user) {
-            return redirect()->route('datacollection')->with('success', 'Data created successfully.');
+            return redirect()->route('index')->with('success', 'Data created successfully.');
         }
         else {
-            return redirect()->route('datacollection')->with('failed', 'Failed! Data not created');
+            return redirect()->route('index')->with('failed', 'Failed! Data not created');
         }
     }
      
@@ -229,10 +229,10 @@ class DatacollectionController extends Controller
         }
 
         if ($user) {
-            return redirect()->route('datacollection')->with('success', 'Data edited successfully.');
+            return redirect()->route('index')->with('success', 'Data edited successfully.');
         }
         else {
-            return redirect()->route('datacollection')->with('failed', 'Failed! Data not edited');
+            return redirect()->route('index')->with('failed', 'Failed! Data not edited');
         }                        
     }
     
@@ -247,10 +247,10 @@ class DatacollectionController extends Controller
         $delete = DB::table('datacollection')->where('id', $id)->delete();
 
         if ($delete) {
-            return redirect()->route('datacollection')->with('success', 'Data deleted successfully.');
+            return redirect()->route('index')->with('success', 'Data deleted successfully.');
         }
         else {
-            return redirect()->route('datacollection')->with('failed', 'Failed! Data not deleted');
+            return redirect()->route('index')->with('failed', 'Failed! Data not deleted');
         }
     }
 }

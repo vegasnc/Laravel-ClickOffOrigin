@@ -93,8 +93,11 @@ $(document).ready(function() {
     }
   }
 
-  $("form").on("submit", (e) => {
-    $(".submit-div").html($("#loading-div").html());
+  $("#btn_submit_temp").on("click", () => {
+    confirmModal("Are you sure?", "Are you sure you want to submit?", ()=>{
+      $("#btn_submit_real").trigger("click");
+      $(".submit-div").html($("#loading-div").html());
+    });
   })
 
 });

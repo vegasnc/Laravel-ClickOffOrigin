@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-5">
+        <div class="col-12 col-sm-12 col-md-5">
             <div class="card">
-                <div class="card-header text-center"><h5 class="mb-0">Please log in to access ClickMetrix.</h5></div>
+                <div class="card-header text-center"><h5 class="mb-0">Log in to access ClickMetrix</h5></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">

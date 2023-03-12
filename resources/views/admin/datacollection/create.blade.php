@@ -2,25 +2,6 @@
 @section('title',"ClickMetrix | DataCollection")
 
 @section('content')
- 
-<!-- Content Header (Page header) -->
-<div class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-12">
-        <h1 class="mb-0 text-center">ClickMetrix</h1>
-      </div><!-- /.col -->
-      <!-- <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard v1</li>
-        </ol>
-      </div> --><!-- /.col -->
-    </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
-
 
 <!-- Main content -->
 <section class="content">
@@ -48,8 +29,8 @@
                         <div class="row">
                             <div class="col-sm-6">
                               <div class="form-group">
-                                <strong>Please Select Asset Types<span class="red">*</span></strong>
-                                <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="asset" name="asset" style="width: 100%;" required>
+                                <strong>Asset Types</strong>
+                                <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="asset" name="asset" style="width: 100%;">
                                   <option value="">Please Select</option>
                                   <option value="1">Add New Asset</option>
                                   @foreach($asset as $key=>$val)
@@ -95,8 +76,8 @@
                         <div class="row">
                             <div class="col-sm-6">
                               <div class="form-group">
-                                <strong>Please Select Status Types<span class="red">*</span></strong>
-                                <select class="form-control select3 select2-success" data-dropdown-css-class="select2-success" id="status" name="status" style="width: 100%;" required>
+                                <strong>Status Types</strong>
+                                <select class="form-control select3 select2-success" data-dropdown-css-class="select2-success" id="status" name="status" style="width: 100%;">
                                   <option value="">Please Select</option>
                                   <option value="1">Add New Status</option>
                                   @foreach($status as $key=>$val)
@@ -116,8 +97,8 @@
 
                       <div class="col-xs-12 col-sm-12 col-md-12">
                           <div class="form-group">
-                              <strong>Quantity<span class="red">*</span></strong>
-                              <input type="number" id="quantity" name="quantity" class="form-control" placeholder="Quantity" required >
+                              <strong>Quantity</strong>
+                              <input type="number" id="quantity" name="quantity" class="form-control" placeholder="Quantity">
                           </div>
                       </div>
 
@@ -126,10 +107,10 @@
                         <div class="row">
                             <div class="col-sm-6">
                               <div class="form-group">
-                                <strong>Please Select Action Types<span class="red">*</span></strong>
+                                <strong>Service or Action<span class="red">*</span></strong>
                                 <select class="form-control select4 select2-success" data-dropdown-css-class="select2-success" id="action" name="action" style="width: 100%;" required>
                                   <option value="">Please Select</option>
-                                  <option value="1">Add New Action</option>
+                                  <option value="1">Add New Service(Action)</option>
                                   @foreach($action as $key=>$val)
                                   <option value="{{$val['name']}}">{{$val['name']}}</option>
                                   @endforeach
@@ -138,7 +119,7 @@
                             </div>
                             <div class="col-sm-6" style="display:none;" id="addnewaction">
                               <div class="form-group">
-                                <strong>Or Add New Action Type</strong>
+                                <strong>Or Add New Service(Action) Type</strong>
                                 <input type="text" name="addnewaction" class="form-control" placeholder="Enter Action Name">
                               </div>
                             </div>
@@ -150,8 +131,8 @@
                         <div class="row">
                             <div class="col-sm-6">
                               <div class="form-group">
-                                <strong>Client Name<span class="red">*</span></strong>
-                                <select class="form-control select5 select2-success" data-dropdown-css-class="select2-success" id="client" name="client" style="width: 100%;" required>
+                                <strong>Client Name</strong>
+                                <select class="form-control select5 select2-success" data-dropdown-css-class="select2-success" id="client" name="client" style="width: 100%;">
                                   <option value="">Please Select</option>
                                   <option value="1">Add New Client</option>
                                   @foreach($client as $key=>$val)
@@ -180,10 +161,9 @@
                               <input type="text" id="color" name="color" class="form-control" placeholder="Color">
                           </div>
                       </div>
-                      <div class="col-xs-12 col-sm-12 col-md-12">
-                          <div class="form-group">
-                              <strong>Take Photos</strong>
-                              <button type="button" id="btn_capture" class="btn btn-success green-btn ml-5">Tap here to Capture Photos</button>  
+                      <div class="col-12 col-sm-12 col-md-12">
+                          <div class="form-group" style="display: flex; margin-top: 15px;">
+                              <button type="button" id="btn_capture" class="btn btn-success green-btn " style="margin: auto;">Tap here to Capture Photos</button>  
                               <input id="btn_ios_capture" type="file" accept="image/*" onchange="handleImageSelect(event)" hidden multiple>
                           </div>
                       </div>
@@ -214,7 +194,8 @@
                       </div>
 
                       <div class="col-xs-12 col-sm-12 col-md-12 text-center submit-div">
-                          <button type="submit" id="btn_submit" class="btn btn-success green-btn">Save Data</button>
+                          <button type="submit" id="btn_submit_real" class=" d-none"></button>
+                          <input type="button" id="btn_submit_temp" class="btn btn-success green-btn" value="Save Data" />
                           <a class="btn btn-success green-btn" href="{{ route('datacollection') }}"> Cancel</a>
                       </div>
                   </div>

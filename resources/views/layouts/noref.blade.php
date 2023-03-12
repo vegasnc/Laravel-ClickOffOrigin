@@ -68,6 +68,7 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
    @yield('content')
+      <!-- The Modal -->
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
@@ -83,8 +84,32 @@
     <!-- Control sidebar content goes here -->
   </aside>
   <!-- /.control-sidebar -->
+
 </div>
 <!-- ./wrapper -->
+<div class="modal fade" id="modal_confirm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body">
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="ok" data-dismiss="modal">Sure</button>
+        <button type="button" class="btn btn-danger" id="cancel" data-dismiss="modal">Cancel</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
 
 <!-- jQuery -->
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
@@ -148,6 +173,8 @@
 <script src="{{asset('dist/js/common.js')}}"></script>
 <script src="https://unpkg.com/feather-icons"></script>
 <script src="{{asset('dist/js/webcamnew.js')}}"></script>
+<script src="{{asset('dist/js/modal.js')}}"></script>
+
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAP_KEY')}}&callback=myMap"></script> -->
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&libraries=places&callback=initialize" async defer></script> -->
 
