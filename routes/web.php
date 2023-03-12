@@ -56,7 +56,7 @@ Route::group(['prefix' => 'v1'], function () {
 });
 
 
-Route::get('/index',[App\Http\Controllers\HomeController::class, 'showIndex']);
+Route::get('/firstpage',[App\Http\Controllers\HomeController::class, 'showIndex']);
 
 Route::get('/datacollection',[App\Http\Controllers\DatacollectionController::class, 'index'])->name('datacollection');
 Route::get('/data-form',[App\Http\Controllers\DatacollectionController::class, 'dataform'])->name('data-form');

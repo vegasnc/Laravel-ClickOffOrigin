@@ -196,7 +196,7 @@
                       <div class="col-xs-12 col-sm-12 col-md-12 text-center submit-div">
                           <button type="submit" id="btn_submit_real" class=" d-none"></button>
                           <input type="button" id="btn_submit_temp" class="btn btn-success green-btn" value="Save Data" />
-                          <a class="btn btn-success green-btn" href="{{ route('index') }}"> Cancel</a>
+                          <a class="btn btn-success green-btn" href="/firstpage"> Cancel</a>
                       </div>
                   </div>
                 
